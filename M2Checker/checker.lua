@@ -84,7 +84,7 @@ end
 function Checker()
 
     print('^0--------------------------------------------------------------------')
-    print("^3FiveM Checker - Automatically check update of compatible resources")
+    print("^3M2.Developer - Automatically check update of compatible resources")
     print('')
     for i, v in pairs(ScriptList) do
         if string.find(v.NewestVersion, v.Version) then
