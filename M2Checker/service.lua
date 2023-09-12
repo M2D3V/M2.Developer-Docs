@@ -67,7 +67,6 @@ end
 local function UpdateChecker(resource)
 	if resource and GetResourceState(resource) == 'started' then
 		if GetResourceMetadata(resource, 'M2Checker', 0) == 'yes' then
-
 			local Name = GetResourceMetadata(resource, 'm2_name', 0)
             local Github = 'https://raw.githubusercontent.com/M2.Developer-Docs/master/'..GetCurrentResourceName();
 			local Version = GetResourceMetadata(resource, 'm2_version', 0)
