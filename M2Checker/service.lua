@@ -2,9 +2,9 @@ local ScriptList = {}
 local Changelogs = 0
 
 CreateThread(function()
-
-    CheckForUpdates()
-
+    if Config['CheckUpdate'] then
+        CheckForUpdates()
+    end
 end)
 
 local function formatChangelog(text)
@@ -38,11 +38,11 @@ local function getUpdateType(currentVersion, newVersion)
     local versionComparison = compareVersions(currentVersion, newVersion)
     if versionComparison == -1 then
         if currentVersion.major < newVersion.major then
-            return "Major"
+            return "^4Major"
         elseif currentVersion.minor < newVersion.minor then
-            return "Minor"
+            return "^3Minor"
         else
-            return "Patch"
+            return "^2Patch"
         end
     end
     return nil
@@ -66,9 +66,9 @@ end
 
 local function UpdateChecker(resource)
 	if resource and GetResourceState(resource) == 'started' then
-		if GetResourceMetadata(resource, 'M2Checker', 0) == 'yes' then
-			local Name = GetResourceMetadata(resource, 'm2_name', 0)
-            local Github = 'https://raw.githubusercontent.com/M2.Developer-Docs/master/'..GetCurrentResourceName();
+        if GetResourceMetadata(resource, 'M2Checker', 0) == 'yes' then
+            local Name = GetResourceMetadata(resource, 'm2_name', 0)
+            local Github = 'https://raw.githubusercontent.com/M2D3V/M2.Developer-Docs/master/'..GetCurrentResourceName();
 			local Version = GetResourceMetadata(resource, 'm2_version', 0)
             local Changelog, GithubL, NewestVersion
             
@@ -81,8 +81,8 @@ local function UpdateChecker(resource)
             if Name ~= nil then
                 Script['Name'] = Name
             else
-                resource = resource:upper()
-                Script['Name'] = '^6'..resource
+                -- resource = resource:upper()
+                Script['Name'] = resource
             end
             Github = Github..'/version'
             Script['Github'] = Github
@@ -125,9 +125,9 @@ local function Checker()
     print('')
     for i, v in pairs(ScriptList) do
         if string.find(v.NewestVersion, v.Version) then
-            print('^4'..v.Name..' ('..v.Resource..') ^2✓ ' .. 'Up to date - Version ' .. v.Version..'^0')
+            print('^0[^2###^0] ^2'..v.Resource..' ^0(^2'..v.Version..'^0) ' .. '^2- Now Currnet : Version ' .. v.Version..' ^0(' .. v.UpdateType .. '^0) ^0')
         else
-            print('^4'..v.Name..' ('..v.Resource..') ^1✗ ' .. 'Outdated (v'..v.Version..') ^5- Update found: Version ' .. v.NewestVersion .. ' ^3(' .. v.UpdateType .. ') ^0('..v.Github..')')
+            print('^0[^1###^0] ^4'..v.Resource..' ^0(^6'..v.Version..'^0) ' .. '^4- Update found : Version ' .. v.NewestVersion .. ' ^0(' .. v.UpdateType .. '^0) ^0')
         end
 
         if v.CL then
@@ -160,4 +160,4 @@ function CheckForUpdates()
 end
 
 
-RegisterCommand('checkupdate', function(source) if source == 0 then CheckForUpdates() end end, false)
+RegisterCommand('checkupdate', function(source) if source == 0 and Config['CheckUpdate'] then CheckForUpdates() end end, false)
