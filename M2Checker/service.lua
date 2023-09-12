@@ -68,10 +68,9 @@ local function UpdateChecker(resource)
 	if resource and GetResourceState(resource) == 'started' then
 		if GetResourceMetadata(resource, 'M2Checker', 0) == 'yes' then
 
-			local Name = GetResourceMetadata(resource, 'name', 0)
-			-- local Github = GetResourceMetadata(resource, 'github', 0)
-            local Github = 'https://github.com/M2D3V/M2.Developer-Docs/'..GetCurrentResourceName();
-			local Version = GetResourceMetadata(resource, 'version', 0)
+			local Name = GetResourceMetadata(resource, 'm2_name', 0)
+            local Github = 'https://github.com/M2D3V/M2.Developer-Docs/master/'..GetCurrentResourceName();
+			local Version = GetResourceMetadata(resource, 'm2_version', 0)
             local Changelog, GithubL, NewestVersion
 
             Script = {}
@@ -100,6 +99,10 @@ local function UpdateChecker(resource)
             end
             PerformHttpRequest(Github, function(Error, V, Header)
                 NewestVersion = V
+                print(Error)
+                if Error then
+                    print('M2Checker No such service Version')
+                end
             end)
             repeat
                 Wait(10)
