@@ -1,5 +1,4 @@
-local Config = {}
+Config = {}
 
 Config['CheckUpdate'] = true
-Config['AutoUpdate'] = false
-Config['License'] = ''
+Config['License'] = 'TESTUSER010101'

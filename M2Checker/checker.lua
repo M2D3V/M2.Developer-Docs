@@ -22,8 +22,8 @@ function UpdateChecker(resource)
 	if resource and GetResourceState(resource) == 'started' then
 		if GetResourceMetadata(resource, 'M2Checker', 0) == 'yes' then
 
-            local Name = GetResourceMetadata(resource, 'name', 0)
-            local Github = 'https://raw.githubusercontent.com/M2D3V/M2.Developer-Docs/master/'..GetCurrentResourceName();
+			local Name = GetResourceMetadata(resource, 'name', 0)
+            local Github = 'https://github.com/M2D3V/M2.Developer-Docs/master/'..GetCurrentResourceName();
 			local Version = GetResourceMetadata(resource, 'version', 0)
             local Changelog, GithubL, NewestVersion
             
@@ -31,7 +31,7 @@ function UpdateChecker(resource)
             
             Script['Resource'] = resource
             if Version == nil then
-                Version = GetResourceMetadata(resource, 'version', 0)
+                Version = GetResourceMetadata(resource, 'm2_version', 0)
             end
             if Name ~= nil then
                 Script['Name'] = Name
