@@ -69,7 +69,7 @@ local function UpdateChecker(resource)
 		if GetResourceMetadata(resource, 'M2Checker', 0) == 'yes' then
 
 			local Name = GetResourceMetadata(resource, 'm2_name', 0)
-            local Github = 'https://github.com/M2D3V/M2.Developer-Docs/master/'..GetCurrentResourceName();
+            local Github = 'https://raw.githubusercontent.com/M2.Developer-Docs/master/'..GetCurrentResourceName();
 			local Version = GetResourceMetadata(resource, 'm2_version', 0)
             local Changelog, GithubL, NewestVersion
             
@@ -86,7 +86,7 @@ local function UpdateChecker(resource)
                 Script['Name'] = '^6'..resource
             end
             Github = Github..'/version'
-            Script['Github'] = Github..'/version'
+            Script['Github'] = Github
             PerformHttpRequest(Github, function(Error, V, Header)
                 NewestVersion = V
             end)
@@ -113,6 +113,9 @@ local function UpdateChecker(resource)
             Script['NewestVersion'] = Version1
             Script['Version'] = Version
             Script['Changelog'] = Changelog
+            print(Script['Github'])
+            print(Script['Version'])
+            print(Script['Changelog'])
             table.insert(ScriptList, Script)
 		end
 	end
