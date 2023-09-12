@@ -72,9 +72,9 @@ local function UpdateChecker(resource)
             local Github = 'https://github.com/M2D3V/M2.Developer-Docs/master/'..GetCurrentResourceName();
 			local Version = GetResourceMetadata(resource, 'm2_version', 0)
             local Changelog, GithubL, NewestVersion
-
+            
             Script = {}
-
+            
             Script['Resource'] = resource
             if Version == nil then
                 Version = GetResourceMetadata(resource, 'version', 0)
@@ -85,24 +85,10 @@ local function UpdateChecker(resource)
                 resource = resource:upper()
                 Script['Name'] = '^6'..resource
             end
-            if string.find(Github, "github") then
-                if string.find(Github, "github.com") then
-                    Script['Github'] = Github
-                    Github = string.gsub(Github, "github", "raw.githubusercontent")..'/master/version'
-                else
-                    GithubL = string.gsub(Github, "raw.githubusercontent", "github"):gsub("/master", "")
-                    Github = Github..'/version'
-                    Script['Github'] = GithubL
-                end
-            else
-                Script['Github'] = Github..'/version'
-            end
+            Github = Github..'/version'
+            Script['Github'] = Github..'/version'
             PerformHttpRequest(Github, function(Error, V, Header)
                 NewestVersion = V
-                print(Error)
-                if Error then
-                    print('M2Checker No such service Version')
-                end
             end)
             repeat
                 Wait(10)
