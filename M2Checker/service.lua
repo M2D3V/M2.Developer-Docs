@@ -112,9 +112,6 @@ local function UpdateChecker(resource)
             Script['NewestVersion'] = Version1
             Script['Version'] = Version
             Script['Changelog'] = Changelog
-            print(Script['Github'])
-            print(Script['Version'])
-            print(Script['Changelog'])
             table.insert(ScriptList, Script)
 		end
 	end
