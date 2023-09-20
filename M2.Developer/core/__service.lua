@@ -124,9 +124,9 @@ local function Checker()
     local Script_Txt = ''
     for i, v in pairs(ScriptList) do
         if string.find(v.NewestVersion, v.Version) then
-            print('^0[^2✅^0] '..v.Resource..' ^0(^2'..v.Version..'^0) ' .. '^0- ^2Correct Version^0')
+            print('^0[^2✓^0] '..v.Resource..' ^0(^2'..v.Version..'^0) ' .. '^0- ^2Correct Version^0')
         else
-            print('^0[^1🛠️^0] ^1'..v.Resource..' ^0(^1'..v.Version..'^0) ' .. '^0- ^5Update found ^0: ^1Version ' .. v.NewestVersion .. ' ^0(' .. v.UpdateType .. '^0) ^0')
+            print('^0[^1✗^0] ^1'..v.Resource..' ^0(^1'..v.Version..'^0) ' .. '^0- ^5Update found ^0: ^1Version ' .. v.NewestVersion .. ' ^0(' .. v.UpdateType .. '^0) ^0')
         end
         Script_Txt = Script_Txt..v.Resource
         if i <= #ScriptList - 1 then
@@ -151,18 +151,13 @@ end
 
 function CheckForUpdates()
     local Resources = GetNumResources()
-    local url = "http://httpbin.org/ip"
+    local url = "https://api.ipify.org/"
     while EndPoint == '' or EndPoint == nil do
         Wait(500)
         PerformHttpRequest(url, function(statusCode, responseText, headers)
             if statusCode == 200 then
-                local ipAddress = string.match(responseText, '"origin": "(.-)"')
-                if ipAddress then
-                    EndPoint = ipAddress
-                    Wait(400)
-                else
-                    print("Failed to retrieve the public IP address.")
-                end
+                EndPoint = responseText
+                Wait(400)
             else
                 print("Failed to retrieve the public IP address.")
             end
